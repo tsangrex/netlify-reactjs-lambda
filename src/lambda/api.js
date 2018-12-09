@@ -17,7 +17,7 @@ const router = express.Router();
 
 router.post("/postToken", (res, req) => {
   console.log(res.body.json());
-  req.json({postBody: req.body.username});
+  req.json("post token");
 });
 app.use(bodyParser.json());
 app.use("/.netlify/functions/api", router);
