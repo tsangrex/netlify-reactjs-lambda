@@ -22,7 +22,7 @@ router.post("/postToken", (res, req) => {
   console.log(res.body);
   req.json("post token");
 });
-app.use("/.netlify/functions/", router);
+app.use("/.netlify/functions/api", router);
 module.exports.handler = serverless(app);
 // export function handler(event, context, callback) {
 //   context.callbackWaitsForEmptyEventLoop = false;

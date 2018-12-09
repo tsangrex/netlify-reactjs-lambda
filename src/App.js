@@ -21,7 +21,7 @@ class LambdaDemo extends Component {
     e.preventDefault();
     let data = {username};
     this.setState({loading: true});
-    fetch("/.netlify/functions/postToken", {
+    fetch("/.netlify/functions/api/postToken", {
       method: "POST",
       body: JSON.stringify(data)
     })
