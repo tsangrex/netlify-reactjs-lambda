@@ -6,14 +6,14 @@ const bodyParser = require("body-parser");
 const router = express.Router();
 const mongoose = require("mongoose");
 const AccessLog = require("./AccessLog");
-mongoose.connect(
-  process.env.MONGODB_URL,
-  {useNewUrlParser: true}
-);
-mongoose.Promise = global.Promise;
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "MongoDB connection error:"));
-console.log("db connected");
+// mongoose.connect(
+//   process.env.MONGODB_URL,
+//   {useNewUrlParser: true}
+// );
+// mongoose.Promise = global.Promise;
+// const db = mongoose.connection;
+// db.on("error", console.error.bind(console, "MongoDB connection error:"));
+// console.log("db connected");
 
 router.post("/postToken", (res, req) => {
   console.log(res.body.json());
