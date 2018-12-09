@@ -18,6 +18,7 @@ const secretPrivateKey = "test123";
 // db.on("error", console.error.bind(console, "MongoDB connection error:"));
 // console.log("db connected");
 const JWTAuth = (req, res, next) => {
+  console.log("JWTAuth");
   const authorizationToken = req.headers["authorization"];
   if (authorizationToken) {
     let tokens = authorizationToken.split(" ");
