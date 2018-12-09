@@ -19,6 +19,7 @@ const obj = {
 };
 console.log("db connected");
 router.post("/postToken", (res, req) => {
+  context.callbackWaitsForEmptyEventLoop = false;
   console.log(res.body);
   req.json("post token");
 });
