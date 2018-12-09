@@ -42,12 +42,12 @@ app.use(
   expressJWT({
     secret: secretPrivateKey
   }).unless({
-    path: ["/postToken"]
+    path: ["/.netlify/functions/api/postToken"]
   })
 );
 app.use(function(err, req, res, next) {
   if (err.name === "UnauthorizedError") {
-    res.status(401).send("invalid token...");
+    res.status(401).json({msg: "invalid jwt"});
   }
 });
 app.use(express.json());
