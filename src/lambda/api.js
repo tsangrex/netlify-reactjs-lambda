@@ -2,7 +2,6 @@
 const serverless = require("serverless-http");
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
 const router = express.Router();
 // const mongoose = require("mongoose");
 // const AccessLog = require("./AccessLog");
@@ -16,10 +15,10 @@ const router = express.Router();
 // console.log("db connected");
 
 router.post("/postToken", (res, req) => {
-  console.log(res.body);
+  // console.log(res.body);
   req.json("post token");
 });
-app.use(bodyParser.json());
+app.use(express.json());
 app.use("/.netlify/functions/api", router);
 module.exports = app;
 module.exports.handler = serverless(app);
