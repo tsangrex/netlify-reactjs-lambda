@@ -17,7 +17,31 @@ const secretPrivateKey = "test123";
 // const db = mongoose.connection;
 // db.on("error", console.error.bind(console, "MongoDB connection error:"));
 // console.log("db connected");
-
+const JWTAuth = (req, res, next) => {
+  const authorizationToken = req.headers["authorization"];
+  if (authorizationToken) {
+    let tokens = authorizationToken.split(" ");
+    jwt.verify(tokens[1], secretPrivateKey, (err, decoded) => {
+      if (err || tokens[0] !== "Bearer") {
+        let message = "Failed to authenticate token.";
+        if (err.name === "TokenExpiredError") {
+          message = "Token has expired, please login again.";
+        }
+        res.json({success: false, message: message});
+        next();
+      } else {
+        req.decoded = decoded._doc;
+        next();
+      }
+    });
+  } else {
+    res.status(403).send({
+      success: false,
+      message: "No token provided."
+    });
+    next();
+  }
+};
 router.post("/postToken", (res, req) => {
   console.log(res.body);
   console.log(res.body.username);
@@ -36,26 +60,27 @@ router.post("/postToken", (res, req) => {
   //   )
   // });
 });
-app.get("/getData", function(req, res) {
+app.get("/getData", JWTAuth, function(req, res) {
   res.send(req.user);
 });
-app.use(
-  expressJWT({
-    secret: secretPrivateKey
-  }).unless({
-    path: [
-      "/.netlify/functions/api/postToken",
-      "/.netlify/functions/api/getData"
-    ]
-  })
-);
-app.use(function(err, req, res, next) {
-  if (err.name === "UnauthorizedError") {
-    res.status(401).json({msg: "invalid path"});
-  } else {
-    res.json({msg: "valid path"});
-  }
-});
+// app.use(
+//   expressJWT({
+//     secret: secretPrivateKey
+//   }).unless({
+//     path: [
+//       "/.netlify/functions/api/postToken",
+//       "/.netlify/functions/api/getData"
+//     ]
+//   })
+// );
+
+// app.use(function(err, req, res, next) {
+//   if (err.name === "UnauthorizedError") {
+//     res.status(401).json({msg: "invalid path"});
+//   } else {
+//     res.json({msg: "valid path"});
+//   }
+// });
 app.use(express.json());
 app.use("/.netlify/functions/api", router);
 module.exports = app;
