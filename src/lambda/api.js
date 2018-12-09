@@ -51,7 +51,7 @@ router.post("/postToken", (req, res) => {
     result: "ok",
     token: jwt.sign(
       {
-        name: res.body.username,
+        name: req.body.username,
         data: "============="
       },
       secretPrivateKey,
