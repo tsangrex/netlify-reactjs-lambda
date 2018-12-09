@@ -43,7 +43,10 @@ app.use(
   expressJWT({
     secret: secretPrivateKey
   }).unless({
-    path: ["/.netlify/functions/api/postToken"]
+    path: [
+      "/.netlify/functions/api/postToken",
+      "/.netlify/functions/api/getData"
+    ]
   })
 );
 app.use(function(err, req, res, next) {
