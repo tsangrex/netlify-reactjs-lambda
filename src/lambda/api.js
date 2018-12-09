@@ -16,7 +16,7 @@ const router = express.Router();
 // console.log("db connected");
 
 router.post("/postToken", (res, req) => {
-  console.log(res.body.json());
+  console.log(res.body);
   req.json("post token");
 });
 app.use(bodyParser.json());
