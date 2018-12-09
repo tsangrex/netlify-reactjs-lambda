@@ -17,7 +17,7 @@ const AccessLog = require("./AccessLog");
 
 router.post("/postToken", (res, req) => {
   console.log(res.body.json());
-  req.json({postBody: req.body});
+  req.json({postBody: req.body.username});
 });
 app.use(bodyParser.json());
 app.use("/.netlify/functions/api", router);
