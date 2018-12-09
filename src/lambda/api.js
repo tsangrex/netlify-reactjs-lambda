@@ -46,20 +46,20 @@ const JWTAuth = (req, res, next) => {
 router.post("/postToken", (req, res) => {
   console.log(req.body);
   console.log(req.body.username);
-  res.json("postToken");
-  // res.json({
-  //   result: "ok",
-  //   token: jwt.sign(
-  //     {
-  //       name: res.body.username,
-  //       data: "============="
-  //     },
-  //     secretPrivateKey,
-  //     {
-  //       expiresIn: 60 * 1
-  //     }
-  //   )
-  // });
+  // res.json("postToken");
+  res.json({
+    result: "ok",
+    token: jwt.sign(
+      {
+        name: res.body.username,
+        data: "============="
+      },
+      secretPrivateKey,
+      {
+        expiresIn: 60 * 1
+      }
+    )
+  });
 });
 router.get("/getData", JWTAuth, function(req, res) {
   res.send(req.user);
