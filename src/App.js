@@ -32,17 +32,28 @@ class LambdaDemo extends Component {
       .then(json => this.setState({loading: false, msg: json.msg}));
   };
 
+  getData = e => {
+    e.preventDefault();
+    this.setState({loading: true});
+    fetch("/.netlify/functions/api/getData")
+      .then(response => response.json())
+      .then(json => this.setState({loading: false, msg: json.msg}));
+  };
+
   render() {
     const {loading, msg} = this.state;
 
     return (
       <p>
         <button onClick={this.postToken("hello")}>
-          {loading ? "Loading..." : "Call Lambda"}
+          {loading ? "Loading..." : "postToken"}
         </button>
-        <button onClick={this.handleClick("async-chuck-norris")}>
+        <button onClick={this.getData}>
+          {loading ? "Loading..." : "getData"}
+        </button>
+        {/* <button onClick={this.handleClick("async-chuck-norris")}>
           {loading ? "Loading..." : "Call Async Lambda"}
-        </button>
+        </button> */}
         <br />
         <span>{msg}</span>
       </p>

@@ -3,6 +3,10 @@ const serverless = require("serverless-http");
 const express = require("express");
 const app = express();
 const router = express.Router();
+const expressJWT = require("express-jwt");
+const jwt = require("jsonwebtoken");
+
+const secretPrivateKey = "test123";
 // const mongoose = require("mongoose");
 // const AccessLog = require("./AccessLog");
 // mongoose.connect(
@@ -17,7 +21,34 @@ const router = express.Router();
 router.post("/postToken", (res, req) => {
   console.log(res.body);
   console.log(res.body.username);
-  req.json("post token");
+  res.json({
+    result: "ok",
+    token: jwt.sign(
+      {
+        name: res.body.username,
+        data: "============="
+      },
+      secretPrivateKey,
+      {
+        expiresIn: 60 * 1
+      }
+    )
+  });
+});
+app.get("/getData", function(req, res) {
+  res.send(req.user);
+});
+app.use(
+  expressJWT({
+    secret: secretPrivateKey
+  }).unless({
+    path: ["/postToken"]
+  })
+);
+app.use(function(err, req, res, next) {
+  if (err.name === "UnauthorizedError") {
+    res.status(401).send("invalid token...");
+  }
 });
 app.use(express.json());
 app.use("/.netlify/functions/api", router);
