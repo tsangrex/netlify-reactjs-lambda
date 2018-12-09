@@ -43,9 +43,9 @@ const JWTAuth = (req, res, next) => {
     next();
   }
 };
-router.post("/postToken", (res, req) => {
-  console.log(res.body);
-  console.log(res.body.username);
+router.post("/postToken", (req, res) => {
+  console.log(req.body);
+  console.log(req.body.username);
   res.json("postToken");
   // res.json({
   //   result: "ok",
