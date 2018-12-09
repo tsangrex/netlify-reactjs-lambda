@@ -20,9 +20,9 @@ export function handler(event, context, callback) {
   console.log("before save");
   accessLog.save(function(err) {
     if (err) {
-      console.log("save error");
+      console.log("save error", err);
       callback(null, {
-        statusCode: 500,
+        statusCode: 200,
         body: JSON.stringify({msg: "failed to create", ...obj})
       });
     } else {
