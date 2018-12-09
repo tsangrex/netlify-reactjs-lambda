@@ -50,6 +50,7 @@ app.use(function(err, req, res, next) {
   if (err.name === "UnauthorizedError") {
     res.status(401).json({msg: "invalid jwt"});
   } else {
+    console.log("no need to auth");
     next();
   }
 });
