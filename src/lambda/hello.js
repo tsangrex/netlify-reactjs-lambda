@@ -13,6 +13,7 @@ const obj = {
 console.log("db connected");
 const AccessLog = require("./AccessLog");
 export function handler(event, context, callback) {
+  context.callbackWaitsForEmptyEventLoop = false;
   let accessLog = new AccessLog({
     event: JSON.stringify(event),
     context: JSON.stringify(context)
