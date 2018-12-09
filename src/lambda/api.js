@@ -4,8 +4,8 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const router = express.Router();
-const mongoose = require("mongoose");
-const AccessLog = require("./AccessLog");
+// const mongoose = require("mongoose");
+// const AccessLog = require("./AccessLog");
 // mongoose.connect(
 //   process.env.MONGODB_URL,
 //   {useNewUrlParser: true}
