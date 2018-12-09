@@ -14,8 +14,8 @@ console.log("db connected");
 const AccessLog = require("./AccessLog");
 export function handler(event, context, callback) {
   let accessLog = new AccessLog({
-    event: event,
-    context: context
+    event: JSON.stringify(event),
+    context: JSON.stringify(context)
   });
   console.log("before save");
   accessLog.save(function(err) {
