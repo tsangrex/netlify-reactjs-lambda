@@ -21,19 +21,20 @@ const secretPrivateKey = "test123";
 router.post("/postToken", (res, req) => {
   console.log(res.body);
   console.log(res.body.username);
-  res.json({
-    result: "ok",
-    token: jwt.sign(
-      {
-        name: res.body.username,
-        data: "============="
-      },
-      secretPrivateKey,
-      {
-        expiresIn: 60 * 1
-      }
-    )
-  });
+  res.json("postToken");
+  // res.json({
+  //   result: "ok",
+  //   token: jwt.sign(
+  //     {
+  //       name: res.body.username,
+  //       data: "============="
+  //     },
+  //     secretPrivateKey,
+  //     {
+  //       expiresIn: 60 * 1
+  //     }
+  //   )
+  // });
 });
 app.get("/getData", function(req, res) {
   res.send(req.user);
