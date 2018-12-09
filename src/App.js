@@ -23,6 +23,9 @@ class LambdaDemo extends Component {
     this.setState({loading: true});
     fetch("/.netlify/functions/api/postToken", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
       body: JSON.stringify(data)
     })
       .then(response => response.json())
