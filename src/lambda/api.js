@@ -51,10 +51,9 @@ app.use(
 );
 app.use(function(err, req, res, next) {
   if (err.name === "UnauthorizedError") {
-    res.status(401).json({msg: "invalid jwt"});
+    res.status(401).json({msg: "invalid path"});
   } else {
-    console.log("no need to auth");
-    next();
+    res.json({msg: "valid path"});
   }
 });
 app.use(express.json());
