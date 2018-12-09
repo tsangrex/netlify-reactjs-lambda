@@ -3,6 +3,7 @@ const serverless = require("serverless-http");
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const router = express.Router();
 app.use(bodyParser);
 const mongoose = require("mongoose");
 const AccessLog = require("./AccessLog");
@@ -17,10 +18,11 @@ const obj = {
   foo: "test"
 };
 console.log("db connected");
-app.post("/postToken", (res, req) => {
+router.post("/postToken", (res, req) => {
   console.log(res.body);
   req.json("post token");
 });
+app.use("/.netlify/functions/", router);
 module.exports.handler = serverless(app);
 // export function handler(event, context, callback) {
 //   context.callbackWaitsForEmptyEventLoop = false;
