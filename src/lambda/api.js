@@ -16,7 +16,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 console.log("db connected");
 
 router.post("/postToken", (res, req) => {
-  console.log(res.body);
+  console.log(res.body.json());
   req.json("post token");
 });
 app.use(bodyParser.json());
