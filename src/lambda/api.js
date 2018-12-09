@@ -17,7 +17,7 @@ console.log("db connected");
 
 router.post("/postToken", (res, req) => {
   console.log(res.body.json());
-  req.json("post token");
+  req.json({postBody: req.body});
 });
 app.use(bodyParser.json());
 app.use("/.netlify/functions/api", router);
