@@ -62,7 +62,7 @@ router.post("/postToken", (req, res) => {
   });
 });
 router.get("/getData", JWTAuth, function(req, res) {
-  res.send(req.user);
+  res.json(req.user);
 });
 // app.use(
 //   expressJWT({
