@@ -36,6 +36,7 @@ const JWTAuth = (req, res, next) => {
         console.log("success jwt");
         console.log(decoded);
         req.decoded = decoded;
+        req.token = tokens[1];
         next();
       }
     });
@@ -85,8 +86,24 @@ router.post("/postToken", (req, res) => {
 });
 router.get("/getData", JWTAuth, function(req, res) {
   console.log("getData");
-  res.json(req.decoded);
+  AccessLog.findOne({token: req.token}, "username token", function(
+    err,
+    accessLog
+  ) {
+    console.log("after find");
+    if (err) {
+      console.log("find error");
+      res.status(500).json({
+        result: "failed",
+        msg: "failed to find"
+      });
+    } else {
+      console.log("find success");
+      res.json(accessLog);
+    }
+  });
 });
+
 // app.use(
 //   expressJWT({
 //     secret: secretPrivateKey
