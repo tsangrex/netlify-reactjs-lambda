@@ -24,6 +24,7 @@ const JWTAuth = (req, res, next) => {
     let tokens = authorizationToken.split(" ");
     jwt.verify(tokens[1], secretPrivateKey, (err, decoded) => {
       if (err || tokens[0] !== "Bearer") {
+        console.log("failed jwt");
         let message = "Failed to authenticate token.";
         if (err.name === "TokenExpiredError") {
           message = "Token has expired, please login again.";
@@ -31,6 +32,7 @@ const JWTAuth = (req, res, next) => {
         res.json({success: false, message: message});
         next();
       } else {
+        console.log("success jwt");
         req.decoded = decoded._doc;
         next();
       }
@@ -44,8 +46,7 @@ const JWTAuth = (req, res, next) => {
   }
 };
 router.post("/postToken", (req, res) => {
-  console.log(req.body);
-  console.log(req.body.username);
+  console.log("postToken");
   // res.json("postToken");
   res.json({
     result: "ok",
@@ -62,6 +63,7 @@ router.post("/postToken", (req, res) => {
   });
 });
 router.get("/getData", JWTAuth, function(req, res) {
+  console.log("getData");
   res.json(req.user);
 });
 // app.use(
