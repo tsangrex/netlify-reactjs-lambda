@@ -21,6 +21,7 @@ const JWTAuth = (req, res, next) => {
   console.log("JWTAuth");
   const authorizationToken = req.headers["authorization"];
   if (authorizationToken) {
+    console.log(authorizationToken);
     let tokens = authorizationToken.split(" ");
     jwt.verify(tokens[1], secretPrivateKey, (err, decoded) => {
       if (err || tokens[0] !== "Bearer") {
