@@ -34,6 +34,7 @@ const JWTAuth = (req, res, next) => {
         next();
       } else {
         console.log("success jwt");
+        console.log(decoded._doc);
         req.decoded = decoded._doc;
         next();
       }
@@ -65,7 +66,7 @@ router.post("/postToken", (req, res) => {
 });
 router.get("/getData", JWTAuth, function(req, res) {
   console.log("getData");
-  res.json(req.user);
+  res.json(req.decoded);
 });
 // app.use(
 //   expressJWT({
