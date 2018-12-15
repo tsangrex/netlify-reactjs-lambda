@@ -29,13 +29,18 @@ class LambdaDemo extends Component {
       body: JSON.stringify(data)
     })
       .then(response => response.json())
-      .then(json => this.setState({loading: false, msg: json.msg}));
+      .then(json =>
+        this.setState({loading: false, msg: json.msg, jwt: json.token})
+      );
   };
 
   getData = e => {
     e.preventDefault();
     this.setState({loading: true});
-    fetch("/.netlify/functions/api/getData")
+    fetch("/.netlify/functions/api/getData", {
+      method: "GET",
+      headers: {authorization: this.state.jwt}
+    })
       .then(response => response.json())
       .then(json => this.setState({loading: false, msg: json.msg}));
   };
