@@ -7,16 +7,16 @@ const expressJWT = require("express-jwt");
 const jwt = require("jsonwebtoken");
 
 const secretPrivateKey = "test123";
-// const mongoose = require("mongoose");
-// const AccessLog = require("./AccessLog");
-// mongoose.connect(
-//   process.env.MONGODB_URL,
-//   {useNewUrlParser: true}
-// );
-// mongoose.Promise = global.Promise;
-// const db = mongoose.connection;
-// db.on("error", console.error.bind(console, "MongoDB connection error:"));
-// console.log("db connected");
+const mongoose = require("mongoose");
+const AccessLog = require("./AccessLog");
+mongoose.connect(
+  process.env.MONGODB_URL,
+  {useNewUrlParser: true}
+);
+mongoose.Promise = global.Promise;
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
+console.log("db connected");
 const JWTAuth = (req, res, next) => {
   console.log("JWTAuth");
   const authorizationToken = req.headers["authorization"];
@@ -50,19 +50,38 @@ const JWTAuth = (req, res, next) => {
 router.post("/postToken", (req, res) => {
   console.log("postToken");
   // res.json("postToken");
-  res.json({
-    result: "ok",
-    token: jwt.sign(
-      {
-        name: req.body.username,
-        data: "============="
-      },
-      secretPrivateKey,
-      {
-        expiresIn: 60 * 1
-      }
-    )
+  let username = req.body.username;
+  let token = jwt.sign(
+    {
+      name: req.body.username,
+      data: "============="
+    },
+    secretPrivateKey,
+    {
+      expiresIn: 60 * 1
+    }
+  );
+  let accessLog = new AccessLog({
+    username: username,
+    token: token
   });
+  console.log("before save");
+  accessLog.save(function(err) {
+    if (err) {
+      console.log("save error", err);
+      res.status(500).json({
+        result: "failed",
+        msg: "failed to save"
+      });
+    } else {
+      console.log("save success");
+      res.json({
+        result: "ok",
+        token: token
+      });
+    }
+  });
+  console.log("after save");
 });
 router.get("/getData", JWTAuth, function(req, res) {
   console.log("getData");
