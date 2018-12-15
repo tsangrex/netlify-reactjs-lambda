@@ -34,6 +34,7 @@ const JWTAuth = (req, res, next) => {
         next();
       } else {
         console.log("success jwt");
+        console.log(decoded);
         console.log(decoded._doc);
         req.decoded = decoded._doc;
         next();
