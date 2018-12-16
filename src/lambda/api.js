@@ -99,7 +99,7 @@ router.get("/users", JWTAuth, function(req, res) {
       });
     } else {
       console.log("find success");
-      res.json([accessLog]);
+      res.json([accessLog, accessLog]);
     }
   });
 });
