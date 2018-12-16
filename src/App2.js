@@ -66,7 +66,7 @@ class LambdaDemo extends Component {
   }
 }
 
-class App extends Component {
+class App2 extends Component {
   render() {
     return (
       <div className="App">
@@ -82,4 +82,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App2;

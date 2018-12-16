@@ -48,8 +48,8 @@ const JWTAuth = (req, res, next) => {
     next();
   }
 };
-router.post("/postToken", (req, res) => {
-  console.log("postToken");
+router.post("/users/authenticate", (req, res) => {
+  console.log("users/authenticate");
   // res.json("postToken");
   let username = req.body.username;
   let token = jwt.sign(
@@ -84,8 +84,8 @@ router.post("/postToken", (req, res) => {
   });
   console.log("after save");
 });
-router.get("/getData", JWTAuth, function(req, res) {
-  console.log("getData");
+router.get("/users", JWTAuth, function(req, res) {
+  console.log("users");
   AccessLog.findOne({token: req.token}, "username token", function(
     err,
     accessLog
